@@ -1,3 +1,4 @@
+import CapturaDados from "./CapturaDados"
 const App = () => {
   return (
     <div className="container">
@@ -13,6 +14,7 @@ const App = () => {
           <h4>Simulador de Investimentos</h4>
           <p>Descubra quanto seu dinheiro pode render com juros compostos</p>
         </div>
+        <CapturaDados />
       </div>
 
     </div>
