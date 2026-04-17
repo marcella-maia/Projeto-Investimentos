@@ -1,6 +1,7 @@
 import CapturaDados from "./CapturaDados"
-import { useState } from 'react'
 import ExibeDados from "./ExibeDados"
+import HistoricoSimulacoes from "./HistoricoSimulacoes"
+import { useState } from 'react'
 
 const App = () => {
   const [valorFinal, setValorFinal] = useState('')
@@ -35,11 +36,11 @@ const App = () => {
   const rent = totalInvestidoCalculado !== 0 ? (juros / totalInvestidoCalculado) * 100 : 0
   
 
-  setValorFinal('R$' + montante.toFixed(2))
-  setTotalInvestido('R$' + totalInvestidoCalculado.toFixed(2))
+  setValorFinal('R$ ' + montante.toFixed(2))
+  setTotalInvestido('R$ ' + totalInvestidoCalculado.toFixed(2))
   setNumeroAportes(pe)
-  setJurosAcumulados('R$' + juros.toFixed(2))
-  setRentabilidade(' +' + rent.toFixed(2) + '%')
+  setJurosAcumulados('R$ ' + juros.toFixed(2))
+  setRentabilidade('+' + rent.toFixed(2) + '%')
 
   const novaSimulacao = {
       id: Date.now(),
@@ -85,33 +86,7 @@ setHistorico([...historico, novaSimulacao])
           />
         </div>
       </div>
-        <div className="card border-0 shadow-sm mt-4">
-          <div className="card-body">
-            <div className="d-flex justify-content-between align-items-center mb-3">
-              <h5 className="mb-0">Histórico de simulações</h5>
-              <small className="text-muted">{historico.length} simulações</small>
-            </div>
-
-            <div className="table-responsive">
-              <table className="table table-sm align-middle mb-0">
-                <thead>
-                  <tr>
-                    <th>Data</th>
-                    <th className="text-end">Valor final</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {historico.map((item) => (
-                    <tr key={item.id}>
-                      <td>{item.data}</td>
-                      <td className="text-end fw-semibold">{item.valor}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
+      <HistoricoSimulacoes historico={historico} />
     </div>
   </div>
 </div>
