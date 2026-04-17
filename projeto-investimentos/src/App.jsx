@@ -8,6 +8,15 @@ const App = () => {
   const [jurosAcumulados, setJurosAcumulados] = useState('')
   const [rentabilidade, setRentabilidade] = useState('')
   const [totalInvestido, setTotalInvestido] = useState('')
+  const [historico, setHistorico] = useState([])
+
+  const limparResultados = () => {
+  setValorFinal('')
+  setTotalInvestido('')
+  setNumeroAportes('')
+  setJurosAcumulados('')
+  setRentabilidade('')
+}
 
   const recebeDados = (valorInicial, aporte, taxa, periodo) => {
   const vi = Number(valorInicial.replace(',', '.'))
@@ -31,6 +40,12 @@ const App = () => {
   setNumeroAportes(pe)
   setJurosAcumulados(' R$' + juros.toFixed(2))
   setRentabilidade(' +' + rent.toFixed(2) + '%')
+
+  const novaSimulacao = {
+  data: new Date().toLocaleString("pt-BR"),
+  valor: 'R$ ' + montante.toFixed(2)
+}
+setHistorico([...historico, novaSimulacao])
 }
 
   return (
@@ -47,8 +62,10 @@ const App = () => {
           <h4>Simulador de Investimentos</h4>
           <p>Descubra quanto seu dinheiro pode render com juros compostos</p>
         </div>
-          <CapturaDados recebeDados={recebeDados} />  
-          <ExibeDados
+           <CapturaDados
+             recebeDados={recebeDados}
+             limparResultados={limparResultados}/>
+            <ExibeDados
             valorFinal={valorFinal}
             totalInvestido={totalInvestido}
             numeroAportes={numeroAportes}
@@ -56,7 +73,18 @@ const App = () => {
             rentabilidade={rentabilidade}
           />    
         </div>
-    </div>
+        <div className="row mt-4">
+          <div className="col-12">
+            <h4>Histórico de simulações</h4>
+            {historico.map((item, index) => (
+              <p key={index}>
+                {item.valor} - {item.data}
+              </p>
+            ))}
+          </div>
+        </div>
+          </div>
+    
   )
 }
 
