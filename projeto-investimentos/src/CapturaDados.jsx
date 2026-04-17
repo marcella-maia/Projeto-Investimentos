@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const CapturaDados = () => {
+const CapturaDados = (props) => {
 
   const [valorInicial, setValorInicial] = useState('')
   const [aporte, setAporte] = useState('')
@@ -43,8 +43,7 @@ const CapturaDados = () => {
         <div className="d-flex gap-2">
           <button 
             className="btn btn-primary"
-            onClick={aoCalcular}
-          >
+            onClick={() => props.recebeDados(valorInicial, aporte, taxa, periodo)}          >
             Calcular
           </button>
 
