@@ -35,55 +35,86 @@ const App = () => {
   const rent = totalInvestidoCalculado !== 0 ? (juros / totalInvestidoCalculado) * 100 : 0
   
 
-  setValorFinal(' R$' + montante.toFixed(2))
-  setTotalInvestido(' R$' + totalInvestidoCalculado.toFixed(2))
+  setValorFinal('R$' + montante.toFixed(2))
+  setTotalInvestido('R$' + totalInvestidoCalculado.toFixed(2))
   setNumeroAportes(pe)
-  setJurosAcumulados(' R$' + juros.toFixed(2))
+  setJurosAcumulados('R$' + juros.toFixed(2))
   setRentabilidade(' +' + rent.toFixed(2) + '%')
 
   const novaSimulacao = {
-  data: new Date().toLocaleString("pt-BR"),
-  valor: 'R$ ' + montante.toFixed(2)
+      id: Date.now(),
+    data: new Date().toLocaleString("pt-BR"),
+    valor: 'R$ ' + montante.toFixed(2)
 }
 setHistorico([...historico, novaSimulacao])
 }
 
   return (
-    <div className="container">
-      
+<div className="container py-4">
+  <div className="row justify-content-center">
+    <div className="col-12 col-lg-7">
       <div className="row">
-        <div className="col-12 text-center mt-5">
-          <h1>Hello, Investimentos</h1>
+        <div className="col-12 text-center mb-4">
+          <h5>Hello, Investimentos</h5>
+        </div>
+      </div>
+  
+      <div className="row mb-3">
+        <div className="col-12">
+          <h3 className="fw-bold mb-1">Simulador de Investimentos</h3>
+          <p className="text-muted mb-0">
+            Descubra quanto seu dinheiro pode render com juros compostos
+          </p>
         </div>
       </div>
 
       <div className="row mt-4">
-        <div className="col-12 text-start">
-          <h4>Simulador de Investimentos</h4>
-          <p>Descubra quanto seu dinheiro pode render com juros compostos</p>
+        <div className="col-12 col-md-6">
+          <CapturaDados
+            recebeDados={recebeDados}
+            limparResultados={limparResultados}
+          />
         </div>
-           <CapturaDados
-             recebeDados={recebeDados}
-             limparResultados={limparResultados}/>
-            <ExibeDados
+        <div className="col-12 col-md-6">
+          <ExibeDados
             valorFinal={valorFinal}
             totalInvestido={totalInvestido}
             numeroAportes={numeroAportes}
             jurosAcumulados={jurosAcumulados}
             rentabilidade={rentabilidade}
-          />    
+          />
         </div>
-        <div className="row mt-4">
-          <div className="col-12">
-            <h4>Histórico de simulações</h4>
-            {historico.map((item, index) => (
-              <p key={index}>
-                {item.valor} - {item.data}
-              </p>
-            ))}
+      </div>
+        <div className="card border-0 shadow-sm mt-4">
+          <div className="card-body">
+            <div className="d-flex justify-content-between align-items-center mb-3">
+              <h5 className="mb-0">Histórico de simulações</h5>
+              <small className="text-muted">{historico.length} simulações</small>
+            </div>
+
+            <div className="table-responsive">
+              <table className="table table-sm align-middle mb-0">
+                <thead>
+                  <tr>
+                    <th>Data</th>
+                    <th className="text-end">Valor final</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {historico.map((item) => (
+                    <tr key={item.id}>
+                      <td>{item.data}</td>
+                      <td className="text-end fw-semibold">{item.valor}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
-          </div>
+    </div>
+  </div>
+</div>
     
   )
 }
