@@ -7,19 +7,13 @@ const CapturaDados = (props) => {
   const [taxa, setTaxa] = useState('')
   const [periodo, setPeriodo] = useState('')
 
-
-    const aoCalcular = (valorInicial, aporte, taxa, periodo) => {
-    setValorInicial(valorInicial)
-    setAporte(aporte)
-    setTaxa(taxa)
-    setPeriodo(periodo)
-  }
-
   const aoLimpar = () => {
     setValorInicial('')
     setAporte('')
     setTaxa('')
     setPeriodo('')
+    props.limparResultados()
+
   }
 
   return (
